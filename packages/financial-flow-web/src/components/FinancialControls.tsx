@@ -1,7 +1,10 @@
-import React from 'react';
-import { FinancialActivity, FINANCIAL_ACTIVITIES, Transaction } from '@financial-flow-viz/core';
-import { Icon } from '@iconify/react';
-
+import React from "react";
+import {
+  FinancialActivity,
+  FINANCIAL_ACTIVITIES,
+  Transaction,
+} from "@financial-flow-viz/core";
+import { Icon } from "@iconify/react";
 interface Props {
   onSubmit: (transaction: Transaction) => void;
   onReset: () => void;
@@ -10,18 +13,18 @@ interface Props {
 }
 
 export const FinancialControls: React.FC<Props> = ({ onSubmit, onReset, onUndo, canUndo }) => {
-  const [activity, setActivity] = React.useState<FinancialActivity | ''>('');
-  const [amount, setAmount] = React.useState('');
+  const [activity, setActivity] = React.useState<FinancialActivity | "">("");
+  const [amount, setAmount] = React.useState("");
 
   const handleSubmit = () => {
     if (activity && amount) {
       onSubmit({
         activity: activity as FinancialActivity,
         amount: Number(amount),
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
-      setAmount('');
-      setActivity('');
+      setAmount("");
+      setActivity("");
     }
   };
 
@@ -30,38 +33,37 @@ export const FinancialControls: React.FC<Props> = ({ onSubmit, onReset, onUndo, 
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold text-gray-800">New Transaction</h2>
         <div className="flex gap-2">
-          <button 
+          <button
             onClick={onUndo}
             disabled={!canUndo}
-            className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
+            className="flex items-center gap-1 px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
             title={canUndo ? "Undo last removal" : "Nothing to undo"}
           >
             <Icon icon="material-symbols:undo" className="h-5 w-5" />
             Undo
           </button>
-          <button 
+          <button
             onClick={onReset}
-            className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 flex items-center gap-1"
+            className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
           >
-            <Icon icon="material-symbols:restart-alt" className="h-5 w-5" />
             Reset All
           </button>
         </div>
       </div>
       <div className="flex gap-4">
-        <select 
+        <select
           value={activity}
           onChange={(e) => setActivity(e.target.value as FinancialActivity)}
           className="flex-1 rounded-md border-gray-300 shadow-sm text-gray-800 focus:border-indigo-500 focus:ring-indigo-500"
         >
           <option value="">Select Activity</option>
-          {FINANCIAL_ACTIVITIES.map(act => (
+          {FINANCIAL_ACTIVITIES.map((act) => (
             <option key={act} value={act}>
-              {act.replace('_', ' ')}
+              {act.replace("_", " ")}
             </option>
           ))}
         </select>
-        
+
         <input
           type="number"
           value={amount}
@@ -69,16 +71,15 @@ export const FinancialControls: React.FC<Props> = ({ onSubmit, onReset, onUndo, 
           placeholder="Enter amount"
           className="flex-1 rounded-md border-gray-300 shadow-sm text-gray-800 focus:border-indigo-500 focus:ring-indigo-500"
         />
-        
-        <button 
+
+        <button
           onClick={handleSubmit}
           disabled={!activity || !amount}
-          className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
+          className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <Icon icon="material-symbols:add-circle-outline" className="h-5 w-5" />
           Process Transaction
         </button>
       </div>
     </div>
   );
-}; 
+};
