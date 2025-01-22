@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "dependencies": {
     "@financial-flow-viz/core": "workspace:*",
+    "@iconify/react": "^5.2.0",
     "@vitejs/plugin-react-swc": "^3.7.2",
     "@xstate/react": "^3.2.2",
     "react": "^18.2.0",
@@ -24,5 +25,8 @@
     "dev": "vite",
     "build": "vite build",
     "dev:all": "pnpm run --parallel -r dev"
+  },
+  "peerDependencies": {
+    "xstate": "^4.38.2"
   }
 }
